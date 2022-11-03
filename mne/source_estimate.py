@@ -2821,11 +2821,20 @@ def _pca_flip(flip, data):
     return sign * scale * V[0]
 
 
+def _pca95(flip, data):
+    U, s, V = _safe_svd(data, full_matrices=False)
+    explained_var = np.cumsum(s ** 2) / np.sum(s ** 2)
+    n_components = np.min(np.argwhere(explained_var >= 0.95)) + 1
+    components = V[:n_components]
+    return np.sqrt(np.mean(components ** 2, axis=0))
+
+
 _label_funcs = {
     'mean': lambda flip, data: np.mean(data, axis=0),
     'mean_flip': lambda flip, data: np.mean(flip * data, axis=0),
     'max': lambda flip, data: np.max(np.abs(data), axis=0),
     'pca_flip': _pca_flip,
+    'pca95': _pca95
 }
 
 

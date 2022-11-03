@@ -691,7 +691,7 @@ def test_extract_label_time_course(kind, vector):
             assert_array_equal(arr[1:], vol_means_t)
 
     # test the different modes
-    modes = ['mean', 'mean_flip', 'pca_flip', 'max', 'auto']
+    modes = ['mean', 'mean_flip', 'pca_flip', 'pca95', 'max', 'auto']
 
     for mode in modes:
         if vector and mode not in ('mean', 'max', 'auto'):
